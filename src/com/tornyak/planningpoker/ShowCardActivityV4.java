@@ -1,32 +1,19 @@
 package com.tornyak.planningpoker;
 
 
-
-import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
-import android.os.Build;
-import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-/**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- * 
- * @see SystemUiHider
- */ 
-public class ShowCardActivity extends Activity
+
+public class ShowCardActivityV4 extends FragmentActivity
 {
-    public static final String LOG_TAG = "ShowCardActivity";
-    
-    /**
-     * A handler object, used for deferring UI operations.
-     */
-    private Handler mHandler = new Handler();
+    public static final String LOG_TAG = "ShowCardActivityV4";
     
     private static final int[] cardFaceImages = {R.drawable.ic_zero_big,
                                     R.drawable.ic_half_big,
@@ -56,17 +43,14 @@ public class ShowCardActivity extends Activity
             // If there is no saved instance state, add a fragment representing the
             // front of the card to this activity. If there is saved instance state,
             // this fragment will have already been added to the activity.
-            getFragmentManager()
+            getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.container, new CardFrontFragment())
                     .commit();
             
         } else {
-            coverSide = (getFragmentManager().getBackStackEntryCount() > 0);
-        }     
-        
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-            getActionBar().hide();
+            coverSide = (getSupportFragmentManager().getBackStackEntryCount() > 0);
+        }
     }
     
     
@@ -76,7 +60,7 @@ public class ShowCardActivity extends Activity
         Log.d(LOG_TAG, "flipCard() index=" + index);
         
         if (coverSide) {
-            getFragmentManager().popBackStack();
+            getSupportFragmentManager().popBackStack();
             coverSide = false;
             return;
         }
@@ -88,14 +72,12 @@ public class ShowCardActivity extends Activity
             
          // Create and commit a new fragment transaction that adds the fragment for the back of
         // the card, uses custom animations, and is part of the fragment manager's back stack.
-        getFragmentManager().beginTransaction()
+        getSupportFragmentManager().beginTransaction()
 
                 // Replace the default fragment animations with animator resources representing
                 // rotations when switching to the back of the card, as well as animator
                 // resources representing rotations when flipping back to the front (e.g. when
                 // the system Back button is pressed).
-                .setCustomAnimations(R.animator.card_flip_right_in, R.animator.card_flip_right_out,
-                                     R.animator.card_flip_left_in, R.animator.card_flip_left_out)
 
                 // Replace any fragments currently in the container view with a fragment
                 // representing the next page (indicated by the just-incremented currentPage
@@ -108,19 +90,6 @@ public class ShowCardActivity extends Activity
 
                 // Commit the transaction.
                 .commit();
-        
-
-        
-
-        // Defer an invalidation of the options menu (on modern devices, the action bar). This
-        // can't be done immediately because the transaction may not yet be committed. Commits
-        // are asynchronous in that they are posted to the main thread's message loop.
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                invalidateOptionsMenu();
-            }
-        });
     }
     
     /**
@@ -155,3 +124,4 @@ public class ShowCardActivity extends Activity
     
         
 }
+

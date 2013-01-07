@@ -59,9 +59,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int ic_two_big=0x7f020018;
         public static final int ic_unknown=0x7f020019;
         public static final int ic_unknown_big=0x7f02001a;
-        public static final int ic_zero=0x7f02001b;
-        public static final int ic_zero_big=0x7f02001c;
-        public static final int seamless_wood_texture=0x7f02001d;
+        public static final int ic_wood_texture_bg=0x7f02001b;
+        public static final int ic_zero=0x7f02001c;
+        public static final int ic_zero_big=0x7f02001d;
     }
     public static final class id {
         public static final int action_flip=0x7f070001;

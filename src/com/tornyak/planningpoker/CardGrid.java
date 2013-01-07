@@ -3,6 +3,8 @@ package com.tornyak.planningpoker;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +13,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-
 import com.tornyak.planningpoker.cards.Deck;
 
 public class CardGrid
@@ -55,7 +56,13 @@ public class CardGrid
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Log.d(LOG_TAG, "CardGridItemClickListener.onItemClick: position: " + position);
-            Intent in = new Intent(context, ShowCardActivity.class);
+            Intent in;
+            
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+                in = new Intent(context, ShowCardActivity.class);
+            else
+                in = new Intent(context, ShowCardActivityV4.class);
+            
             in.putExtra("index", position);
             context.startActivity(in);
         }
@@ -92,14 +99,14 @@ public class CardGrid
 
             if (convertView == null) {
                 imageView = new ImageView(context);
-                imageView.setLayoutParams(new GridView.LayoutParams((int)pictureWidth, (int)pictureWidth));
-                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                //imageView.setLayoutParams(new GridView.LayoutParams((int)pictureWidth, (int)pictureWidth));
+                //imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             } else {
                 imageView = (ImageView) convertView;
             }
             
-            
-            imageView.setImageResource(cardImages[position]);
+            Bitmap b = BitmapUtils.decodeSampledBitmapFromResource(context.getResources(), cardImages[position], (int) pictureWidth, (int) pictureWidth);           
+            imageView.setImageBitmap(b);
             
             return imageView;
         }
