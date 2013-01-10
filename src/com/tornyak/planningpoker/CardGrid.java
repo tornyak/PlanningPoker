@@ -99,8 +99,8 @@ public class CardGrid
 
             if (convertView == null) {
                 imageView = new ImageView(context);
-                //imageView.setLayoutParams(new GridView.LayoutParams((int)pictureWidth, (int)pictureWidth));
-                //imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                imageView.setLayoutParams(new GridView.LayoutParams((int)pictureWidth, (int)pictureWidth));
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             } else {
                 imageView = (ImageView) convertView;
             }
